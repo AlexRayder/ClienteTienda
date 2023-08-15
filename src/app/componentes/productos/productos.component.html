@@ -1,0 +1,74 @@
+
+<br>
+<div class="btnAgregar">
+    <a href="/producto"><button class="btn btn-dark fw-bold" style="color: white;">Agregar</button></a>
+</div>
+<h3 style="text-align: center;color: black;" class="fw-bold">GESTIONAR PRODUCTOS</h3>
+<br>
+<br>
+<div class="table-responsive">
+    <table class="table" id="tblTienda">
+        <thead class="bg-black text-white text-center">
+            <tr>
+                <th class="text-center">Codigo</th>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Precio</th>
+                <th class="text-center">Categoria</th>
+                <th class="text-center">Foto</th>
+                <th class="text-center" style="color: purple;">Acción</th> <!-- Aquí se cambió el color del encabezado de la columna "Acción" a morado-->
+            </tr>
+        </thead>
+        <tbody>
+        
+            <tr id="fila" *ngFor="let producto of listaProductos">
+                <td class="text-center">{{producto.proCodigo}}</td>
+                <td class="text-center">{{producto.proNombre}}</td>
+                <td class="text-end">{{producto.proPrecio | currency: "COP"}}</td>
+                <ng-container *ngFor="let categoria of listaCategorias"><td  *ngIf="categoria.id == producto.proCategoria">{{categoria.catNombre}}</td>
+                 </ng-container>
+                <td class="text-center">
+                    <img src="{{producto.proFoto}}" width="50" height="50">
+                </td>
+                <td class="text-center">
+                    <a href="/editarProducto/{{producto.id}}"><ion-icon name="create" id="edit"></ion-icon></a>
+                    <ion-icon name="trash-outline" id="trash" (click)="abrirModalEliminar(producto.proCodigo)"></ion-icon>
+                </td>
+            </tr>
+       
+        </tbody>
+    </table>
+</div>
+<br>
+
+
+
+
+<!-- The Modal -->
+<div class="modal"  id="modalEliminar" [ngStyle]="{'display':display}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Eliminar Producto</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="cerrarModal()"></button>
+        </div>
+  
+        <!-- Modal Contenido-->
+        <div class="modal-body">
+            ¿Estás seguro de eliminar el Producto?
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <a href="" id="rutaEliminar">
+                <button type="button" class="btn btn-success" id="btnEliminar" (click)="eliminarProducto()">Si</button>
+            </a>
+            <button type="button" class="btn btn-danger" id="btnCancelarModal" (click)="cerrarModal()" data-dismiss="modal">No</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+
